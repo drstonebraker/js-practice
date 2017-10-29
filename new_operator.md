@@ -10,5 +10,5 @@ const myObj = new NewObj()
 
 equivalent to?
 const myObj = Object.create(NewObj.prototype)
-NewObj.call(myObj)
 myObj.constructor = NewObj
+NewObj.call(myObj)
