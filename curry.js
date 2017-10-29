@@ -24,21 +24,6 @@ function curry (fn, thisArg, numArgs) {
   return _curry
 }
 
-// function curry(fn, object, numArgs) {
-//   const args = []
-//
-//   const _curry = function(arg) {
-//     args.push(arg)
-//     if (args.length >= numArgs) {
-//       return fn.apply(object, args)
-//     } else {
-//       return _curry
-//     }
-//   }
-//
-//   return _curry
-// }
-//
 console.log(sumNums(1,2,3));
 const curriedSumNums = curry(sumNums, {}, 3)
 console.log(curriedSumNums(1));
@@ -60,21 +45,6 @@ Function.prototype.curry = function (context, numArgs) {
   return _curry
 };
 
-// Function.prototype.curry = function (context, numArgs) {
-//   const args = []
-//
-//   const _curry = (arg) => {
-//     args.push(arg)
-//     if (args.length >= numArgs) {
-//       return this.apply(context, args)
-//     } else {
-//       return _curry
-//     }
-//   }
-//
-//   return _curry
-// };
-//
 console.log('#######');
 const arr = [1,2,3]
 console.log(arr.concat([4,5, 6],[7, 8, 9], [10,11,12]));
