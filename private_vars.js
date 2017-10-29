@@ -11,7 +11,7 @@ const bankAccount = function bankAccount(initialBal, newPassword) {
       if (isValidPassword(passwordDigest, password)) {
         return balance
       } else {
-        throw 'unauthorized'
+        throw Error('Incorrect password')
       }
     }
   }
