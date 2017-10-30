@@ -2,35 +2,39 @@
 // such as account balance and return object with public methods for granting
 // authorized access to private vars
 
-const bankAccount = function bankAccount(initialBal, newPassword) {
+
+const createAccount = (initialBal, newPassword) => {
   let balance = initialBal
-  const passwordDigest = createPasswordDigest(newPassword)
+  const passwordDigest = new PasswordDigest(newPassword)
 
   return {
-    getBalance: function(password) {
-      if (isValidPassword(passwordDigest, password)) {
+    getBalance: function (password) {
+      if (passwordDigest.checkPassword(password)) {
         return balance
       } else {
-        throw Error('Incorrect password')
+        throw new Error('Invalid password')
       }
     }
   }
 }
 
-
 // write a method that creates an object with a value that can only be accessed a
 // limited number of times
 
-const LimitedUseObject = function LimitUseObject(value) {
-  let remainingUses = 3
+const LimitedUseObject = function (value, limit) {
+  let remainingUses = limit
 
   this.use = function () {
-    remainingUses--
-    return remainingUses >= 0 ? value : null
+    if (remainingUses > 0) {
+      remainingUses--
+      return value
+    } else {
+      return null
+    }
   }
 }
 
-const myObj = new LimitedUseObject('abc');
+const myObj = new LimitedUseObject('abc', 3);
 
 console.log(myObj.use())
 console.log(myObj.use())
@@ -43,12 +47,11 @@ console.log(myObj.use())
 // of a function
 
 const createChant = function createChant() {
-
   const chant = []
 
-  return function printChant(word) {
+  return function (word) {
     chant.push(word)
-    console.log(chant.join(' '))
+    console.log(chant.join(' '));
   }
 }
 

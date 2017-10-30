@@ -8,33 +8,48 @@ function sumNums(...args) {
 // original `fn` with the accumulated arguments, using `object` as the
 // context.
 
-function curry (fn, thisArg, numArgs) {
+function curry (fn, context, numArgs) {
   const args = []
 
   const _curry = function (newArg) {
     args.push(newArg)
-
     if (args.length >= numArgs) {
-      return fn.apply(thisArg, args)
+      return fn.apply(context, args)
     } else {
       return _curry
     }
   }
-
   return _curry
 }
 
-console.log(sumNums(1,2,3));
+// function curry (fn, thisArg, numArgs) {
+//   const args = []
+//
+//   const _curry = function (newArg) {
+//     args.push(newArg)
+//
+//     if (args.length >= numArgs) {
+//       return fn.apply(thisArg, args)
+//     } else {
+//       return _curry
+//     }
+//   }
+//
+//   return _curry
+// }
+
+const expectedResult = sumNums(1,2,3)
 const curriedSumNums = curry(sumNums, {}, 3)
-console.log(curriedSumNums(1));
-console.log(curriedSumNums(2));
-console.log(curriedSumNums(3));
+console.log(curriedSumNums(1) === curriedSumNums);
+console.log(curriedSumNums(2) === curriedSumNums);
+console.log(curriedSumNums(3) === expectedResult);
 
 Function.prototype.curry = function (context, numArgs) {
   const args = []
 
   const _curry = (newArg) => {
     args.push(newArg)
+
     if (args.length >= numArgs) {
       return this.apply(context, args)
     } else {
@@ -47,8 +62,8 @@ Function.prototype.curry = function (context, numArgs) {
 
 console.log('#######');
 const arr = [1,2,3]
-console.log(arr.concat([4,5, 6],[7, 8, 9], [10,11,12]));
+const expectedResult2 = arr.concat([4,5, 6],[7, 8, 9], [10,11,12]);
 const curriedConcat = arr.concat.curry(arr, 3)
-console.log(curriedConcat([4,5,6]));
-console.log(curriedConcat([7,8,9]));
-console.log(curriedConcat([10,11,12]));
+console.log(curriedConcat([4,5,6]) === curriedConcat);
+console.log(curriedConcat([7,8,9]) === curriedConcat);
+console.log(curriedConcat([10,11,12]) === expectedResult2);
